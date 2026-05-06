@@ -288,6 +288,7 @@
           <button class="cat-pill" data-c="buiten">🌿 Buiten</button>
           <button class="cat-pill" data-c="geschiedenis">🏺 Geschiedenis</button>
           <button class="cat-pill" data-c="event">🌸 Mei</button>
+          <button class="cat-pill" data-c="winkelen">🛍️ Winkelen</button>
           <button class="cat-pill" data-c="fav">❤️ Favorieten</button>
         </div>
       </div>
@@ -721,7 +722,19 @@ var HOTSPOTS = [
   { id:'hs42', name:'Porta Portese', category:'buiten', catLabel:'Zondagsmarkt', neighborhood:'Trastevere', price:'gratis',
     highlight:'Rome’s grootste vlooienmarkt: elke zondag 7u\u201314u, 1000+ kramen over 2 km. Tussen de tweedehands spullen: porchetta-broodjes, suppli en arrosticini (Abruzzese lamspennen).',
     tip:'Ga voor 9u — daarna wordt het druk. Loopafstand van Casa Daria langs de Tiber.', lat:41.8778, lng:12.4683,
-    lore:'Porta Portese begon vlak na de Tweede Wereldoorlog als zwarte markt voor overgebleven legermateriaal. Nu strekt de markt zich 2 km langs de Tiber uit. Romans gebruiken de naam als synoniem voor elke rommelmarkt. Op zondagochtend is dit wat Trastevere doet — samen met een cornetto aan een bar naast de fontein.' }
+    lore:'Porta Portese begon vlak na de Tweede Wereldoorlog als zwarte markt voor overgebleven legermateriaal. Nu strekt de markt zich 2 km langs de Tiber uit. Romans gebruiken de naam als synoniem voor elke rommelmarkt. Op zondagochtend is dit wat Trastevere doet — samen met een cornetto aan een bar naast de fontein.' },
+  { id:'hs43', name:'Tina Sondergaard', category:'winkelen', catLabel:'Boetiek', neighborhood:'Monti', price:'€€€',
+    highlight:'Stille Deense ontwerpster met een atelier in het hart van Monti. Vloeiende linnen en zijden jurken in mediterrane kleuren — precies het soort zachte, luchtige stijl die past bij een Ibiza-gevoel maar dan met Italiaanse verfijning.',
+    tip:'Op maat laten maken kan ook. Via del Boschetto 1D, vlakbij de Colosseum-metro. Open di–za, 11–19u.', lat:41.8938, lng:12.4927,
+    lore:'Tina Sondergaard verliet Denemarken voor Rome en opende haar atelier in Monti omdat de wijk haar aan een dorp deed denken. Ze werkt met kleine Italiaanse textielfabrieken en naait veel stukken zelf. Haar jurken zijn niet goedkoop, maar ze gaan een leven mee. Stamklanten komen soms al tien jaar terug.' },
+  { id:'hs44', name:'Le Gallinelle', category:'winkelen', catLabel:'Boetiek', neighborhood:'Monti', price:'€€€',
+    highlight:'Legendarische Monti-boetiek van Wilma Silvestri, al 30 jaar het adres voor vrouwen die iets bijzonders zoeken. Jurken met een theatraal, romantisch karakter — denk wijde mouwen, delicate stoffen en onverwachte details.',
+    tip:'Via Panisperna 60. Wilma kan soms op dezelfde dag iets aanpassen. Bel voor openingstijden: +39 06 488 1017.', lat:41.8944, lng:12.4958,
+    lore:'Wilma Silvestri opende Le Gallinelle in de jaren negentig in een pand dat ooit een kippenslagerij was — vandaar de naam. Ze combineert vintage stoffen met eigen ontwerpen. De winkel staat in vrijwel elke Rome-gids voor vrouwen die mode serieus nemen maar geen mainstream willen.' },
+  { id:'hs45', name:'LOL Concept Store', category:'winkelen', catLabel:'Concept store', neighborhood:'Monti', price:'€€',
+    highlight:'Curated concept store op Via Urbana met Italiaanse en internationale merken. Lichte zomerjurken, linnen, geurkaarsen en sieraden — alles in één sfeervolle ruimte. Minder exclusief dan de ateliers, maar uitstekend voor een mooi vondst zonder afspraak.',
+    tip:'Via Urbana 89–92, tussen Piazza della Madonna dei Monti en Via Leonina. Dagelijks open, 11–20u.', lat:41.8952, lng:12.4961,
+    lore:'LOL begon als klein experiment van twee Romeinse vrouwen die moe waren van de grote modeketens. Ze selecteren persoonlijk elk stuk in de winkel. Het concept sloeg aan — inmiddels twee panden naast elkaar op Via Urbana. Monti heeft er een vaste plek voor gekregen op de Romeinse mode-kaart.' }
 
 ];
 
@@ -1094,11 +1107,11 @@ function navFromBtn(btn) {
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function catColor(c) {
-  var m = {eten:'#D4A843',cultuur:'#7B5EA7',buiten:'#5C8A5C',geschiedenis:'#C8553D',event:'#E05252',sfeer:'#E8A44A',vervoer:'#4A8FA8'};
+  var m = {eten:'#D4A843',cultuur:'#7B5EA7',buiten:'#5C8A5C',geschiedenis:'#C8553D',event:'#E05252',sfeer:'#E8A44A',vervoer:'#4A8FA8',winkelen:'#C0607A'};
   return m[c] || '#9A7B72';
 }
 function catEmoji(c) {
-  var m = {eten:'🍝',cultuur:'🎨',buiten:'🌿',geschiedenis:'🏺',event:'🌸',sfeer:'✨',vervoer:'🛵'};
+  var m = {eten:'🍝',cultuur:'🎨',buiten:'🌿',geschiedenis:'🏺',event:'🌸',sfeer:'✨',vervoer:'🛵',winkelen:'🛍️'};
   return m[c] || '📍';
 }
 function capFirst(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
