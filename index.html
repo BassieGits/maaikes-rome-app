@@ -59,6 +59,7 @@
     .app-header { padding-top: var(--safe-t); background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding-left: 20px; padding-right: 20px; height: calc(var(--safe-t) + 56px); flex-shrink: 0; }
     .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; font-style: italic; color: var(--tc); }
     .hdr-sub { font-size: 14px; color: var(--text-l); margin-left: auto; }
+    .hdr-audio-btn { background: none; border: none; cursor: pointer; padding: 6px; margin-left: 10px; color: var(--text-l); font-size: 20px; line-height: 1; opacity: .6; }
 
     /* ── TABS ────────────────────────────────────── */
     .tab-content { flex: 1; overflow: hidden; position: relative; }
@@ -307,6 +308,7 @@
   <div class="app-header">
     <span class="hdr-title" onclick="goHome()" style="cursor:pointer">Roma ♥</span>
     <span class="hdr-sub">8 – 11 mei 2026</span>
+    <button class="hdr-audio-btn" onclick="aoHerspelen()" title="Berichtje van Bas">🔊</button>
   </div>
 
   <div class="tab-content">
@@ -875,6 +877,15 @@ function aoSkip() {
 function aoVervolgApp() {
   aoAudio.pause();
   document.getElementById('audio-overlay').classList.add('gone');
+}
+
+function aoHerspelen() {
+  aoAudio.currentTime = 0;
+  aoFill.style.width = '0%';
+  aoTime.textContent = '0:00';
+  aoBtn.classList.remove('playing');
+  aoVerder.classList.remove('visible');
+  document.getElementById('audio-overlay').classList.remove('gone');
 }
 
 // ── WELCOME ───────────────────────────────────────────────────────────────────
