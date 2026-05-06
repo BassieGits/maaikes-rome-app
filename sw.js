@@ -1,4 +1,4 @@
-const CACHE = 'roma-v1';
+const CACHE = 'roma-v2';
 const FILES = ['./', './index.html', './photo.jpg', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', function(e) {
