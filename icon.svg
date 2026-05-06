@@ -1,24 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Terracotta background -->
-  <rect width="512" height="512" rx="108" fill="#C8553D"/>
-  <!-- Classic R — drawn as vector paths, no text rendering -->
-  <path fill-rule="evenodd" fill="white" d="
-    M 148 398
-    L 148 114
-    L 278 114
-    Q 402 114 402 214
-    Q 402 294 292 300
-    L 400 398
-    L 326 398
-    L 228 300
-    L 206 300
-    L 206 398
+  <defs>
+    <clipPath id="clip">
+      <rect width="512" height="512" rx="108"/>
+    </clipPath>
+    <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#000" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <!-- Italiaanse vlag: groen | wit | rood -->
+  <g clip-path="url(#clip)">
+    <rect x="0"   y="0" width="171" height="512" fill="#009246"/>
+    <rect x="171" y="0" width="170" height="512" fill="#F0F0F0"/>
+    <rect x="341" y="0" width="171" height="512" fill="#CE2B37"/>
+  </g>
+
+  <!-- R — klassieke vector R, wit met schaduw -->
+  <path filter="url(#sh)" fill-rule="evenodd" fill="white" d="
+    M 148 352
+    L 148 96
+    L 278 96
+    Q 405 96 405 198
+    Q 405 278 288 284
+    L 398 352
+    L 322 352
+    L 220 284
+    L 206 284
+    L 206 352
     Z
-    M 206 164
-    L 266 164
-    Q 348 164 348 214
-    Q 348 252 266 252
-    L 206 252
+    M 206 148
+    L 266 148
+    Q 350 148 350 198
+    Q 350 242 266 242
+    L 206 242
     Z
+  "/>
+
+  <!-- Hart — rood met witte rand -->
+  <path filter="url(#sh)" fill="#CE2B37" stroke="white" stroke-width="6" stroke-linejoin="round" d="
+    M 256 454
+    C 248 446 188 412 188 374
+    C 188 352 204 337 226 343
+    C 240 347 250 357 256 366
+    C 262 357 272 347 286 343
+    C 308 337 324 352 324 374
+    C 324 412 264 446 256 454 Z
   "/>
 </svg>
