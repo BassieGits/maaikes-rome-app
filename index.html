@@ -206,6 +206,12 @@
     @keyframes floatUp  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideUp  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
   </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#C8553D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Roma ♥">
+  <link rel="apple-touch-icon" href="icon.svg">
 </head>
 <body>
 
@@ -775,6 +781,51 @@ function selectDay(i) {
   renderDay(i);
 }
 
+
+var MORNING = [
+  { date:'2026-05-08', title:'Goedemorgen in Rome, lief schatje!', paras:[
+    'Voor vrijdag 8 mei staat de eerste dag van het ontdekken van Rome op de planning. Wat ga je een mooie tijd beleven hier samen met mij!',
+    'We houden het een beetje lokaal en gaan lekker aan de wandel door Trastevere. Echt een hele leuke wijk. We zien zelf wel waar we zin in hebben, waar we gaan eten en wat we gaan doen.',
+    'In deze app vind je allerlei informatie die ons bij onze zoektocht gaat helpen.'
+  ]},
+  { date:'2026-05-09', title:'Goedemorgen — dag twee!', paras:[
+    'Een kleine verrassing aan het begin. Je zult straks wel erachter komen wat ik bedoel.',
+    'We gaan op zoek naar lokale dingen in Rome: een lekker marktje, een leuk restaurantje, en we gaan kijken in de oude wijken.'
+  ]},
+  { date:'2026-05-10', title:'Goedemorgen — de grote dag!', paras:[
+    'Vandaag duiken we de geschiedenis in.',
+    'We beginnen, als het weer een beetje meewerkt, met een lekkere wandeling door de Villa Borghese. Prachtig park bovenaan op een van de heuvels van Rome.',
+    'Dan duiken we de stad weer in, langs de Piazza Navona, het Pantheon, en gaan op weg naar het Colosseum. En daar zien we de echte oudheid; vervolgens wandelen we door naar het Forum Romanum en het Palatijn. De plek waar de oude Romeinen in hun senaatsmantels rondliepen.'
+  ]},
+  { date:'2026-05-11', title:'Goedemorgen, laatste ochtend…', paras:[
+    'We kunnen terugkijken, denk ik, naar een prachtig verblijf in Rome. Lekker met z\'n tweetjes, genoten van alles wat Rome te bieden heeft. Genoten van het mooie weer, het lekkere eten, van elkaar en het gewoon samen zijn.',
+    'Ik weet nu al, op het moment dat ik dit invul, dat het echt iets heerlijks wordt en dat we weer heerlijke, prachtige herinneringen hebben gemaakt. I love you!'
+  ]}
+];
+
+function buildMorningCard(idx) {
+  var m = MORNING[idx];
+  if (!m) return '';
+  var today = new Date().toISOString().slice(0, 10);
+  if (today < m.date) {
+    return '<div class="morning-card morning-locked">'
+      + '<div class="morning-inner"><div class="morning-head">'
+      + '<span class="morning-icon">💌</span>'
+      + '<div><div class="morning-from">Van B</div>'
+      + '<div class="morning-title">Een brief voor deze dag</div>'
+      + '<div class="morning-sealed">Wordt zichtbaar op de ochtend zelf…</div></div>'
+      + '</div></div></div>';
+  }
+  var parasHTML = m.paras.map(function(p) { return '<p>' + esc(p) + '</p>'; }).join('');
+  return '<div class="morning-card">'
+    + '<div class="morning-inner"><div class="morning-head">'
+    + '<span class="morning-icon">💌</span>'
+    + '<div><div class="morning-from">Van B, speciaal voor jou</div>'
+    + '<div class="morning-title">' + esc(m.title) + '</div></div>'
+    + '</div><div class="morning-body">' + parasHTML + '</div>'
+    + '</div></div>';
+}
+
 function renderDay(i) {
   var day = DAYS[i];
   document.getElementById('day-theme').textContent = day.theme;
@@ -784,7 +835,7 @@ function renderDay(i) {
     ? day.stops.length + ' stops'
     : done + ' van ' + day.stops.length + ' bezocht ✓';
 
-  var html = '';
+  var html = buildMorningCard(i);
   for (var j = 0; j < day.stops.length; j++) {
     html += buildStopHTML(day.stops[j], i);
   }
@@ -1038,5 +1089,12 @@ function catEmoji(c) {
 }
 function capFirst(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
 </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js').catch(function(){});
+    });
+  }
+  </script>
 </body>
 </html>
