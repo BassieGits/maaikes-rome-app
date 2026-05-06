@@ -1,4 +1,4 @@
-const CACHE = 'roma-v3';
+const CACHE = 'roma-v4';
 const FILES = ['./', './index.html', './photo.jpg', './manifest.json', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function(e) {
