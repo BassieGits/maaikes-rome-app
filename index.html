@@ -40,7 +40,7 @@
       background: linear-gradient(145deg, #D4B87A 0%, #C4A060 35%, #9A7A48 70%, #5C3C1C 100%);
       color: white; transition: opacity .7s ease;
     }
-    #welcome-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 15%; z-index: 0; }
+    #welcome-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 0%; z-index: 0; }
     #welcome::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, rgba(30,18,6,.08) 0%, rgba(30,18,6,.52) 58%, rgba(30,18,6,.86) 100%); pointer-events: none; }
     #welcome.fade-out { opacity: 0; pointer-events: none; }
     #welcome.gone     { display: none; }
@@ -98,13 +98,13 @@
     .stop-meta-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
     .stop-left { flex: 1; min-width: 0; }
     .stop-cat { font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 7px; display: inline-block; margin-bottom: 5px; }
-    .stop-name { font-size: 16px; font-weight: 600; line-height: 1.25; }
+    .stop-name { font-size: 17px; font-weight: 600; line-height: 1.25; }
     .badge-res { flex-shrink: 0; background: #EDF7ED; color: var(--green); font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 7px; white-space: nowrap; }
     .badge-opt { flex-shrink: 0; background: #FFF8E7; color: #A07800; font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 7px; white-space: nowrap; }
-    .stop-desc { padding: 0 13px 10px; font-size: 15px; line-height: 1.6; color: var(--text-m); }
+    .stop-desc { padding: 0 13px 10px; font-size: 16px; line-height: 1.6; color: var(--text-m); }
     .stop-expand { border-top: 1px solid var(--border); padding: 10px 13px; display: none; }
     .stop-expand.open { display: block; }
-    .detail-row { display: flex; align-items: flex-start; gap: 6px; font-size: 14px; color: var(--text-m); margin-bottom: 6px; line-height: 1.5; }
+    .detail-row { display: flex; align-items: flex-start; gap: 6px; font-size: 15px; color: var(--text-m); margin-bottom: 6px; line-height: 1.5; }
     .detail-row:last-child { margin-bottom: 0; }
     .detail-icon { flex-shrink: 0; width: 18px; text-align: center; }
     .stop-actions { display: flex; align-items: center; gap: 7px; padding: 8px 12px 11px; border-top: 1px solid var(--border); }
@@ -151,15 +151,15 @@
     .hs-inner { flex: 1; display: flex; flex-direction: column; min-width: 0; }
     .hs-body { padding: 12px 13px 4px; }
     .hs-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
-    .hs-name { font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .hs-name { font-size: 17px; font-weight: 600; line-height: 1.3; }
     .btn-heart { background: transparent; border: none; font-size: 21px; cursor: pointer; padding: 2px; flex-shrink: 0; line-height: 1; }
     .hs-meta { font-size: 13px; color: var(--text-l); margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
     .price-pill { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px; }
     .price-pill.gratis   { background: #EDF7ED; color: var(--green); }
     .price-pill.betaald  { background: #F3F0F8; color: var(--purple); }
     .price-pill.goedkoop { background: #FFF8E7; color: #A07800; }
-    .hs-highlight { font-size: 15px; color: var(--text-m); line-height: 1.5; margin-bottom: 5px; }
-    .hs-tip { font-size: 13px; color: var(--text-l); line-height: 1.4; font-style: italic; }
+    .hs-highlight { font-size: 16px; color: var(--text-m); line-height: 1.5; margin-bottom: 5px; }
+    .hs-tip { font-size: 14px; color: var(--text-l); line-height: 1.4; font-style: italic; }
     .hs-actions { padding: 8px 12px 10px; border-top: 1px solid var(--border); margin-top: 6px; }
 
     /* ── PRAKTISCH ───────────────────────────────── */
@@ -176,16 +176,16 @@
     .tip-card-icon { font-size: 24px; margin-bottom: 5px; }
     .tip-card-label { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
     .tip-card-text { font-size: 13px; color: var(--text-m); line-height: 1.4; }
-    .tip-li { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; font-size: 15px; color: var(--text-m); line-height: 1.5; }
+    .tip-li { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; font-size: 16px; color: var(--text-m); line-height: 1.5; }
     .tip-li strong { color: var(--text); font-weight: 600; }
 
-    .morning-card { margin: 14px 16px 4px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(140,60,30,.13), 0 1px 4px rgba(0,0,0,.07); border: 1px solid #E2B898; }
+    .morning-card { margin: 14px 0 4px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(140,60,30,.13), 0 1px 4px rgba(0,0,0,.07); border: 1px solid #E2B898; }
     .morning-ribbon { background: var(--tc); padding: 10px 18px; display: flex; align-items: center; gap: 10px; }
     .morning-ribbon-icon { font-size: 18px; line-height: 1; }
     .morning-ribbon-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.92); letter-spacing: 1.4px; text-transform: uppercase; }
     .morning-inner { background: #FFFBF6; padding: 18px 20px 20px; }
     .morning-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; font-style: italic; color: #4A2810; line-height: 1.3; margin-bottom: 12px; }
-    .morning-body { font-size: 16px; line-height: 1.78; color: var(--text); }
+    .morning-body { font-size: 17px; line-height: 1.78; color: var(--text); }
     .morning-body p { margin: 0 0 10px; }
     .morning-body p:last-child { margin-bottom: 0; }
     .morning-locked .morning-ribbon { background: #B8937A; }
@@ -213,7 +213,7 @@
     .rome-ch.open .rome-arrow { transform: rotate(180deg); }
     .rome-ch-body { display: none; padding: 4px 20px 22px; }
     .rome-ch.open .rome-ch-body { display: block; }
-    .rome-ch-body p { font-size: 16px; line-height: 1.78; color: var(--text); margin-bottom: 14px; }
+    .rome-ch-body p { font-size: 17px; line-height: 1.78; color: var(--text); margin-bottom: 14px; }
     .rome-ch-body p:last-child { margin-bottom: 0; }
     /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes floatUp  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -245,7 +245,7 @@
 <!-- APP -->
 <div id="app" class="gone">
   <div class="app-header">
-    <span class="hdr-title">Roma ♥</span>
+    <span class="hdr-title" onclick="goHome()" style="cursor:pointer">Roma ♥</span>
     <span class="hdr-sub">8 – 11 mei 2026</span>
   </div>
 
@@ -751,6 +751,13 @@ var PHOTO_DATA_URL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QqsRXh
 })();
 
 // ── WELCOME ───────────────────────────────────────────────────────────────────
+function goHome() {
+  var w = document.getElementById('welcome');
+  var a = document.getElementById('app');
+  a.classList.add('gone');
+  w.classList.remove('gone');
+  w.classList.remove('fade-out');
+}
 function enterApp() {
   var w = document.getElementById('welcome');
   var a = document.getElementById('app');
