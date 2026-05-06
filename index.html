@@ -541,7 +541,7 @@ var DAYS = [
       { id:'v0b', time:'11:00', name:'Aankomst Casa Daria', icon:'🏠', category:'aankomst', catLabel:'Aankomst',
         description:'Casa Daria is jullie thuisbasis in Trastevere voor de komende vier dagen. Gooi de koffers neer, fris je op, en geniet van de eerste Italiaanse koffie.',
         tip:'De villa staat op loopafstand — perfect voor de rest van de dag.',
-        hours:'Check-in: 13:00 (vroeg aanmelden kan)', price:'Verblijf', lat:41.88705, lng:12.47234, reserved:false },
+        hours:'Check-in: 13:00 (vroeg aanmelden kan)', price:'Verblijf', lat:41.88705, lng:12.47234, noMarker:true, reserved:false },
       { id:'v1', time:'11:30', name:'Villa Farnesina', icon:'🎨', category:'cultuur', catLabel:'Cultuur',
         description:'Verborgen renaissancevilla verscholen in Trastevere. Raphael schilderde hier de beroemde fresco\'s, inclusief de Triumph of Galatea. Nauwelijks toeristen.',
         tip:'Loopafstand vanaf Casa Daria (±10 min). De villa sluit op vrijdag om 13:15 — kom voor 11:30!',
@@ -1092,14 +1092,17 @@ function initMap() {
   L.marker([BNB.lat, BNB.lng], {icon:homeIcon})
     .addTo(leafMap)
     .bindPopup('<div class="lp-name">🏠 ' + BNB.name + '</div><div class="lp-sub">Viale di Trastevere 40</div>'
-      + '<a class="lp-btn" href="maps://maps.apple.com/?daddr=' + BNB.lat + ',' + BNB.lng + '&q=' + encodeURIComponent(BNB.name) + '" target="_blank">📍 Open in Maps</a>');
+      + '<div class="lp-btns">'
+      + '<a class="lp-btn-sec" href="#" onclick="showStopCard(\'v0b\',0);return false;">📋 Aankomst</a>'
+      + '<a class="lp-btn" href="maps://maps.apple.com/?daddr=' + BNB.lat + ',' + BNB.lng + '&q=' + encodeURIComponent(BNB.name) + '" target="_blank">📍 Maps</a>'
+      + '</div>');
 
   // Programma markers
   for (var di = 0; di < DAYS.length; di++) {
     (function(day){
       for (var si = 0; si < day.stops.length; si++) {
         (function(s){
-          if (!s.lat) return;
+          if (!s.lat || s.noMarker) return;
           var mk = L.marker([s.lat, s.lng], {icon: pinIcon(s.icon, day.color)})
             .addTo(leafMap)
             .bindPopup('<div class="lp-name">' + s.name + '</div><div class="lp-sub">' + day.shortLabel + ' \xB7 ' + s.time + '</div>'
