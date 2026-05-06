@@ -1,5 +1,5 @@
-const CACHE = 'roma-v4';
-const FILES = ['./', './index.html', './photo.jpg', './manifest.json', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
+const CACHE = 'roma-v5';
+const FILES = ['./', './index.html', './photo.jpg', './manifest.json', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './welkom.m4a'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(FILES); }));

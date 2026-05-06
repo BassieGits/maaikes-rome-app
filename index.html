@@ -218,6 +218,48 @@
     /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes floatUp  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideUp  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse    { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(200,85,61,.4); } 50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(200,85,61,0); } }
+
+    /* ── AUDIO OVERLAY ───────────────────────────── */
+    #audio-overlay {
+      position: fixed; inset: 0; z-index: 1100;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 28px calc(32px + var(--safe-b));
+      background: linear-gradient(160deg, #2C1810 0%, #5C3C1C 60%, #9A6030 100%);
+      color: white;
+    }
+    #audio-overlay.gone { display: none; }
+    .ao-envelope { font-size: 52px; margin-bottom: 20px; animation: floatUp .8s ease .1s both; }
+    .ao-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; font-style: italic; text-align: center; line-height: 1.3; margin-bottom: 8px; animation: floatUp .8s ease .25s both; }
+    .ao-sub { font-size: 14px; color: rgba(255,255,255,.65); text-align: center; margin-bottom: 48px; letter-spacing: .5px; animation: floatUp .8s ease .4s both; }
+    .ao-play-btn {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: var(--tc); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      animation: floatUp .8s ease .55s both, pulse 2s ease-in-out 1.4s infinite;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      transition: background .2s;
+    }
+    .ao-play-btn:active { background: #A8442D; }
+    .ao-play-icon { width: 36px; height: 36px; fill: white; margin-left: 5px; }
+    .ao-pause-icon { width: 32px; height: 32px; fill: white; display: none; }
+    .ao-play-btn.playing .ao-play-icon  { display: none; }
+    .ao-play-btn.playing .ao-pause-icon { display: block; }
+    .ao-play-btn.playing { animation: none; }
+    .ao-progress-wrap { width: 100%; max-width: 300px; margin-top: 36px; animation: floatUp .8s ease .7s both; }
+    .ao-progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,.2); border-radius: 2px; overflow: hidden; }
+    .ao-progress-fill { height: 100%; width: 0%; background: rgba(255,255,255,.8); border-radius: 2px; transition: width .5s linear; }
+    .ao-time { font-size: 12px; color: rgba(255,255,255,.5); text-align: right; margin-top: 6px; }
+    .ao-verder-btn {
+      margin-top: 40px; width: 100%; max-width: 300px;
+      padding: 15px; background: rgba(240,225,185,.92); color: #5C3C1C;
+      border: none; border-radius: 16px; font-size: 17px; font-weight: 600;
+      cursor: pointer; box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      opacity: 0; transition: opacity .5s ease; pointer-events: none;
+    }
+    .ao-verder-btn.visible { opacity: 1; pointer-events: auto; }
+    .ao-skip { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,.35); cursor: pointer; text-decoration: underline; animation: floatUp .8s ease .9s both; }
   </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#C8553D">
@@ -227,6 +269,24 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
+
+<!-- AUDIO OVERLAY -->
+<div id="audio-overlay">
+  <div class="ao-envelope">💌</div>
+  <div class="ao-title">Een berichtje<br>van Bastiaan</div>
+  <div class="ao-sub">Tik op play om te luisteren</div>
+  <button class="ao-play-btn" id="ao-play-btn" onclick="aoToggle()">
+    <svg class="ao-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="ao-pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+  <div class="ao-progress-wrap">
+    <div class="ao-progress-bar"><div class="ao-progress-fill" id="ao-fill"></div></div>
+    <div class="ao-time" id="ao-time">0:00</div>
+  </div>
+  <button class="ao-verder-btn" id="ao-verder" onclick="aoVervolgApp()">Mijn avontuur ontdekken ✈️</button>
+  <span class="ao-skip" onclick="aoSkip()">sla over</span>
+  <audio id="ao-audio" src="welkom.m4a" preload="auto"></audio>
+</div>
 
 <!-- WELCOME -->
 <div id="welcome">
@@ -762,6 +822,60 @@ var PHOTO_DATA_URL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QqsRXh
     document.getElementById('welcome-photo').src = PHOTO_DATA_URL;
   }
 })();
+
+// ── AUDIO OVERLAY ─────────────────────────────────────────────────────────────
+(function() {
+  var overlay = document.getElementById('audio-overlay');
+  if (localStorage.getItem('heardWelcome')) {
+    overlay.classList.add('gone');
+  }
+})();
+
+var aoAudio = document.getElementById('ao-audio');
+var aoFill  = document.getElementById('ao-fill');
+var aoTime  = document.getElementById('ao-time');
+var aoBtn   = document.getElementById('ao-play-btn');
+var aoVerder = document.getElementById('ao-verder');
+
+function fmtTime(s) {
+  var m = Math.floor(s / 60);
+  return m + ':' + ('0' + Math.floor(s % 60)).slice(-2);
+}
+
+aoAudio.addEventListener('timeupdate', function() {
+  if (!aoAudio.duration) return;
+  var pct = (aoAudio.currentTime / aoAudio.duration) * 100;
+  aoFill.style.width = pct + '%';
+  aoTime.textContent = fmtTime(aoAudio.currentTime);
+});
+
+aoAudio.addEventListener('ended', function() {
+  aoBtn.classList.remove('playing');
+  aoFill.style.width = '100%';
+  aoVerder.classList.add('visible');
+  localStorage.setItem('heardWelcome', '1');
+});
+
+function aoToggle() {
+  if (aoAudio.paused) {
+    aoAudio.play();
+    aoBtn.classList.add('playing');
+  } else {
+    aoAudio.pause();
+    aoBtn.classList.remove('playing');
+  }
+}
+
+function aoSkip() {
+  aoAudio.pause();
+  localStorage.setItem('heardWelcome', '1');
+  document.getElementById('audio-overlay').classList.add('gone');
+}
+
+function aoVervolgApp() {
+  aoAudio.pause();
+  document.getElementById('audio-overlay').classList.add('gone');
+}
 
 // ── WELCOME ───────────────────────────────────────────────────────────────────
 function goHome() {
