@@ -161,7 +161,8 @@
     .price-pill.goedkoop { background: #FFF8E7; color: #A07800; }
     .hs-highlight { font-size: 17px; color: var(--text-m); line-height: 1.5; margin-bottom: 5px; }
     .hs-tip { font-size: 14px; color: var(--text-l); line-height: 1.4; font-style: italic; }
-    .hs-actions { padding: 8px 12px 10px; border-top: 1px solid var(--border); margin-top: 6px; }
+    .hs-actions { padding: 8px 12px 10px; border-top: 1px solid var(--border); margin-top: 6px; display: flex; gap: 6px; }
+    .btn-map { flex: 1; padding: 9px 8px; background: white; border: 1.5px solid var(--blue); border-radius: 10px; font-size: 15px; font-weight: 500; color: var(--blue); cursor: pointer; text-align: center; }
 
     /* ── PRAKTISCH ───────────────────────────────── */
     .prak { padding: 18px 14px 0; }
@@ -1183,10 +1184,27 @@ function buildHsHTML(h) {
     +   '</div>'
     +   '<div class="hs-actions">'
     +     (h.lore ? '<button class="btn-lore" onclick="toggleLore(\'' + h.id + '\')">📖 Verhaal</button>' : '')
-    +     '<button class="btn-nav-s"' + (h.lore ? '' : ' style="width:100%"') + ' data-lat="' + h.lat + '" data-lng="' + h.lng + '" data-name="' + esc(h.name) + '" onclick="navFromBtn(this)">📍 Navigeer</button>'
+    +     '<button class="btn-map" onclick="showOnMap(\'' + h.id + '\',' + h.lat + ',' + h.lng + ')">🗺️ Kaart</button>'
+    +     '<button class="btn-nav-s" data-lat="' + h.lat + '" data-lng="' + h.lng + '" data-name="' + esc(h.name) + '" onclick="navFromBtn(this)">📍 Navigeer</button>'
     +   '</div>'
     + '</div>'
     + '</div>';
+}
+
+function showOnMap(id, lat, lng) {
+  switchTab('kaart');
+  var tries = 0;
+  function tryPan() {
+    if (leafMap) {
+      leafMap.invalidateSize();
+      leafMap.setView([lat, lng], 17, {animate: true});
+      var obj = allMarkers[id];
+      if (obj && leafMap.hasLayer(obj.m)) obj.m.openPopup();
+    } else if (tries++ < 20) {
+      setTimeout(tryPan, 100);
+    }
+  }
+  setTimeout(tryPan, 100);
 }
 
 function toggleFav(id) {
