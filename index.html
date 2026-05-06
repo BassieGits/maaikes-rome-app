@@ -343,6 +343,7 @@
           <button class="map-pill" data-f="buiten">🌿 Buiten</button>
           <button class="map-pill" data-f="geschiedenis">🏺 Geschiedenis</button>
           <button class="map-pill" data-f="event">🌸 Mei</button>
+          <button class="map-pill" data-f="winkelen">🛍️ Winkelen</button>
         </div>
         <div id="map"></div>
       </div>
@@ -1086,7 +1087,7 @@ function initMap() {
 
   // B&B marker — huis-icoon, opvallend
   var homeIcon = L.divIcon({
-    html: '<div style="width:40px;height:40px;background:#2C1810;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.35);border:2.5px solid white;font-size:18px;">🏠</div>',
+    html: '<div style="width:44px;height:44px;background:#D4A843;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.35);border:3px solid white;font-size:20px;">🏠</div>',
     className:'', iconSize:[40,40], iconAnchor:[20,20], popupAnchor:[0,-24]
   });
   L.marker([BNB.lat, BNB.lng], {icon:homeIcon})
