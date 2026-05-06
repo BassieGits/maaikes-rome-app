@@ -113,6 +113,8 @@
     .btn-more:active { background: var(--border); }
     .btn-nav-s { flex: 1; padding: 8px; border: 1px solid var(--tc); border-radius: 10px; background: transparent; font-size: 14px; color: var(--tc); font-weight: 500; cursor: pointer; text-align: center; transition: all .15s; }
     .btn-nav-s:active { background: var(--tc); color: white; }
+    .btn-icon { width: 38px; height: 38px; border-radius: 10px; background: white; display: flex; align-items: center; justify-content: center; font-size: 17px; cursor: pointer; flex-shrink: 0; border: 1.5px solid var(--border); transition: background .15s; }
+    .btn-icon:active { background: var(--border); }
     .btn-check { width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--border); background: white; display: flex; align-items: center; justify-content: center; font-size: 17px; cursor: pointer; transition: all .25s; flex-shrink: 0; }
     .stop-wrap.done .btn-check { background: var(--green); border-color: var(--green); color: white; }
     .btn-check:active { transform: scale(.88); }
@@ -136,6 +138,7 @@
     .lp-btns .lp-btn, .lp-btns .lp-btn-sec { margin: 0; }
     @keyframes hsFlash { 0%,100% { box-shadow: 0 0 0 0 rgba(74,143,168,0); } 30% { box-shadow: 0 0 0 6px rgba(74,143,168,.45); } }
     .hs-card.flash { animation: hsFlash .9s ease; }
+    .stop-wrap.flash { animation: hsFlash .9s ease; }
     .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,.12) !important; }
     .leaflet-control-zoom a { border-radius: 9px !important; border: 1px solid var(--border) !important; }
     .leaflet-control-attribution { font-size: 9px !important; }
@@ -1034,7 +1037,8 @@ function buildStopHTML(s, dayIdx) {
     +   '<div class="stop-expand" id="exp-' + s.id + '">' + expandHTML + '</div>'
     +   '<div class="stop-actions">'
     +     '<button class="btn-more" onclick="toggleExp(\'' + s.id + '\')"><span id="el-' + s.id + '">Tips &amp; info ↓</span></button>'
-    +     '<button class="btn-nav-s" data-lat="' + s.lat + '" data-lng="' + s.lng + '" data-name="' + esc(s.name) + '" onclick="navFromBtn(this)">📍 Navigeer</button>'
+    +     (s.lat ? '<button class="btn-icon" title="Toon op kaart" onclick="showOnMap(\'' + s.id + '\',' + s.lat + ',' + s.lng + ')">🗺️</button>' : '')
+    +     (s.lat ? '<button class="btn-icon" title="Navigeer" data-lat="' + s.lat + '" data-lng="' + s.lng + '" data-name="' + esc(s.name) + '" onclick="navFromBtn(this)">📍</button>' : '')
     +     '<button class="btn-check" onclick="toggleCheck(\'' + s.id + '\',' + dayIdx + ')">' + (isDone?'✓':'○') + '</button>'
     +   '</div>'
     + '</div>'
@@ -1099,7 +1103,10 @@ function initMap() {
           var mk = L.marker([s.lat, s.lng], {icon: pinIcon(s.icon, day.color)})
             .addTo(leafMap)
             .bindPopup('<div class="lp-name">' + s.name + '</div><div class="lp-sub">' + day.shortLabel + ' \xB7 ' + s.time + '</div>'
-              + '<a class="lp-btn" href="maps://maps.apple.com/?daddr=' + s.lat + ',' + s.lng + '&q=' + encodeURIComponent(s.name) + '" target="_blank">📍 Open in Maps</a>');
+              + '<div class="lp-btns">'
+              + '<a class="lp-btn-sec" href="#" onclick="showStopCard(\'' + s.id + '\',' + di + ');return false;">📋 Bekijk info</a>'
+              + '<a class="lp-btn" href="maps://maps.apple.com/?daddr=' + s.lat + ',' + s.lng + '&q=' + encodeURIComponent(s.name) + '" target="_blank">📍 Maps</a>'
+              + '</div>');
           allMarkers[s.id] = { m:mk, f:'programma' };
         })(day.stops[si]);
       }
@@ -1197,6 +1204,21 @@ function buildHsHTML(h) {
     +   '</div>'
     + '</div>'
     + '</div>';
+}
+
+function showStopCard(id, dayIdx) {
+  if (leafMap) leafMap.closePopup();
+  switchTab('programma');
+  selectDay(dayIdx);
+  setTimeout(function() {
+    var card = document.getElementById('sw-' + id);
+    if (!card) return;
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    card.classList.remove('flash');
+    void card.offsetWidth;
+    card.classList.add('flash');
+    setTimeout(function(){ card.classList.remove('flash'); }, 950);
+  }, 80);
 }
 
 function showHotspotCard(id) {
